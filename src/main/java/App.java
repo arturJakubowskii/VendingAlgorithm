@@ -6,6 +6,9 @@ import java.util.Scanner;
 public class App {
 
     public static void main(String[] args) {
+        System.out.println("1.Water 0.80  2.Sandwich 1.50  3.Chocolate 2.20  4.Chips 5");
+
+        List<Integer> providedCoins = new ArrayList<>();
 
         List<Integer> acceptedCoins = new ArrayList<>();
         acceptedCoins.add(10);
@@ -31,22 +34,35 @@ public class App {
         products.put(4, 500);
 
 
+
+
+        /*
+        COIN INPUT SYSTEM
+         */
         Scanner scanner = new Scanner(System.in);
         int product = scanner.nextInt();
-
         int amount = 0;
 
-        System.out.println("1.Water 0.80  2.Sandwich 1.50  3.Chocolate 2.20  4.Chips 5");
+
+        while (amount < products.get(product)){
+            int coin = scanner.nextInt();
+
+            if (!acceptedCoins.contains(coin)){ // checks if coin from input is valid (in acceptedCoins)
+                coin = 0;
+                System.out.println("Wrong coin");
+            }
+
+            amount+= coin;
+            providedCoins.add(coin);
+        }
 
 
-//        while (amount < products.get(product)){
-//
-//        }
 
 
+        /*
+        CHANGE SYSTEM
+         */
 
-//        if (!acceptedCoins.contains(coins)){
-//            System.out.println("Wrong coin");
-//        }
+
     }
 }
