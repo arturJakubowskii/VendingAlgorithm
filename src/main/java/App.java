@@ -37,7 +37,19 @@ public class App {
 
 
     public static void changeSystem(int userAmount, HashMap<Integer, Integer> products, HashMap<Integer, Integer> machineCoinQuantity, List<Integer> providedCoins, List<Integer> acceptedCoins, int product) {
+
         int change = setChange(userAmount, products, providedCoins, product);
+
+        if (!checkCoinQuantityInMachine(machineCoinQuantity)){
+            System.out.println("Machine is unable to give you change. "
+                    + "Please enter amount of coins equal to the product price" + "\n"
+                    + "Here are your inserted coins:");
+            for (int coin : providedCoins){
+                System.out.println(coin);
+            }
+            change = 0;
+        }
+
         if(change == 0){
             System.out.println("No change needed");
         }else{
@@ -48,13 +60,7 @@ public class App {
 
                     if (change - acceptedCoin >= 0){
                         change -= acceptedCoin;
-
-                        if (!checkCoinQuantityInMachine(machineCoinQuantity)){
-                            System.out.println("Machine is unable to give you change. " +
-                                    "Please enter amount of coins equal to the product price");
-                        }else{
-                            System.out.println(acceptedCoin);
-                        }
+                        System.out.println(acceptedCoin);
                         machineCoinQuantity.put(acceptedCoin, machineCoinQuantity.get(acceptedCoin) - 1);
                     }
                 }
@@ -94,7 +100,6 @@ public class App {
                 amount+= coin;
 
                 if (amount > products.get(product) && !checkCoinQuantityInMachine(machineCoinQuantity)){
-                    machineCoinQuantity.put(coin, machineCoinQuantity.get(coin) + 1);
                     paymentSystem(amount, products, machineCoinQuantity, providedCoins, acceptedCoins, scanner, product);
 
                 }
