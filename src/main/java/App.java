@@ -6,7 +6,6 @@ import java.util.Scanner;
 public class App {
 
     public static void main(String[] args) {
-        System.out.println("1.Water 0.80  2.Sandwich 1.50  3.Chocolate 2.20  4.Chips 5");
 
         int amount = 0;
         int userAmount = 0;
@@ -23,32 +22,22 @@ public class App {
         fillTheArray(acceptedCoins);
         fillTheHashMaps(machineCoinQuantity, products);
 
+        int i = 0;
+        do{
+            System.out.println("1.Water 0.80  2.Sandwich 1.50  3.Chocolate 2.20  4.Chips 5");
+            int product = scanner.nextInt();
+            paymentSystem(amount, products, machineCoinQuantity, providedCoins, acceptedCoins, scanner, product);
+            changeSystem(userAmount, products, machineCoinQuantity, providedCoins, acceptedCoins, product);
+            i++;
+        }
+        while (i < 10);
 
-//        boolean coinQuantityFlag = true;
-//        for (Integer value : machineCoinQuantity.values()){
-//            if (value >= 3){
-//                coinQuantityFlag = false;
-//                break;
-//            }
-//        }
-
-
-        int product = scanner.nextInt();
-        paymentSystem(amount, products, machineCoinQuantity, providedCoins, acceptedCoins, scanner, product);
-
-
-        /*
-        CHANGE SYSTEM
-         */
-
-        /*
-        TODO
-        1. check if coin quantity is less than 3, if so make user input full price
-        2. refactor code
-         */
+    }
 
 
 
+
+    public static void changeSystem(int userAmount, HashMap<Integer, Integer> products, HashMap<Integer, Integer> machineCoinQuantity, List<Integer> providedCoins, List<Integer> acceptedCoins, int product) {
         int change = setChange(userAmount, products, providedCoins, product);
         if(change == 0){
             System.out.println("No change needed");
@@ -61,13 +50,17 @@ public class App {
                     if (change - acceptedCoin >= 0){
                         change -= acceptedCoin;
                         System.out.println(acceptedCoin);
+
+//                        for (Integer value : machineCoinQuantity.values()){
+//                            if (value <= 0){
+//                                System.out.println("poszlo na 0");
+//                            }
+//                        }
                         machineCoinQuantity.put(acceptedCoin, machineCoinQuantity.get(acceptedCoin) - 1);
                     }
                 }
             }
         }
-
-
     }
 
     public static int setChange(int userAmount, HashMap<Integer, Integer> products, List<Integer> providedCoins, int product) {
@@ -79,6 +72,7 @@ public class App {
     }
 
     public static void paymentSystem(int amount, HashMap<Integer, Integer> products, HashMap<Integer, Integer> machineCoinQuantity, List<Integer> providedCoins, List<Integer> acceptedCoins, Scanner scanner, int product) {
+
         while (amount < products.get(product)){
             int coin = scanner.nextInt();
 
@@ -94,8 +88,16 @@ public class App {
             amount+= coin;
             providedCoins.add(coin);
 
+//            if (coinAmountFlag = false){
+//                System.out.println("Machine can't give you change." +
+//                        " Please insert equal amount of money for chosen product");
+//                paymentSystem(amount, products, machineCoinQuantity, providedCoins, acceptedCoins, scanner, product);
+//            }
+
             machineCoinQuantity.put(coin, machineCoinQuantity.get(coin) + 1); // increments coin quantity by 1
+            change =
         }
+
     }
 
     public static void fillTheArray(List<Integer> acceptedCoins) {
@@ -108,13 +110,13 @@ public class App {
     }
 
     public static void fillTheHashMaps(HashMap<Integer, Integer> machineCoinQuantity, HashMap<Integer, Integer> products) {
-        machineCoinQuantity.put(0,0);
+        machineCoinQuantity.put(0,123);
         machineCoinQuantity.put(10, 5); // coin value, quantity
         machineCoinQuantity.put(20, 4);
         machineCoinQuantity.put(50, 4);
         machineCoinQuantity.put(100, 3);
-        machineCoinQuantity.put(200, 2);
-        machineCoinQuantity.put(500, 1);
+        machineCoinQuantity.put(200, 3);
+        machineCoinQuantity.put(500, 3);
 
         products.put(1, 80);
         products.put(2, 150);
