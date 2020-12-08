@@ -36,7 +36,6 @@ public class App {
 
 
 
-
     public static void changeSystem(int userAmount, HashMap<Integer, Integer> products, HashMap<Integer, Integer> machineCoinQuantity, List<Integer> providedCoins, List<Integer> acceptedCoins, int product) {
         int change = setChange(userAmount, products, providedCoins, product);
         if(change == 0){
@@ -49,13 +48,13 @@ public class App {
 
                     if (change - acceptedCoin >= 0){
                         change -= acceptedCoin;
-                        System.out.println(acceptedCoin);
 
-//                        for (Integer value : machineCoinQuantity.values()){
-//                            if (value <= 0){
-//                                System.out.println("poszlo na 0");
-//                            }
-//                        }
+                        if (!checkCoinQuantityInMachine(machineCoinQuantity)){
+                            System.out.println("Machine is unable to give you change. " +
+                                    "Please enter amount of coins equal to the product price");
+                        }else{
+                            System.out.println(acceptedCoin);
+                        }
                         machineCoinQuantity.put(acceptedCoin, machineCoinQuantity.get(acceptedCoin) - 1);
                     }
                 }
@@ -68,38 +67,51 @@ public class App {
         for (int coin : providedCoins){
             userAmount+= coin;
         }
+
         // we need to clear the list, if we don't do that
         // userAmount will be growing with previous arguments
         providedCoins.clear();
         return Math.abs(productValue - userAmount);
     }
 
+
+
+
     public static void paymentSystem(int amount, HashMap<Integer, Integer> products, HashMap<Integer, Integer> machineCoinQuantity, List<Integer> providedCoins, List<Integer> acceptedCoins, Scanner scanner, int product) {
 
-        while (amount < products.get(product)){
-            int coin = scanner.nextInt();
+            while (amount < products.get(product)){
+                int coin = scanner.nextInt();
 
-            if (!acceptedCoins.contains(coin)){ // checks if coin from input is valid (in acceptedCoins)
-                coin = 0;
-                System.out.println("Wrong coin");
+                if (!acceptedCoins.contains(coin)){ // checks if coin from input is valid (in acceptedCoins)
+                    coin = 0;
+                    System.out.println("Wrong coin");
+                }
+
+                if (coin <= 5 && coin != 0){ // makes coins 1, 2 and 5 a hundredths
+                    coin *= 100;
+                }
+
+                amount+= coin;
+
+                if (amount > products.get(product) && !checkCoinQuantityInMachine(machineCoinQuantity)){
+                    machineCoinQuantity.put(coin, machineCoinQuantity.get(coin) + 1);
+                    paymentSystem(amount, products, machineCoinQuantity, providedCoins, acceptedCoins, scanner, product);
+
+                }
+
+                providedCoins.add(coin);
+                machineCoinQuantity.put(coin, machineCoinQuantity.get(coin) + 1); // increments coin quantity by 1
             }
+    }
 
-            if (coin <= 5 && coin != 0){ // makes coins 1, 2 and 5 a hundredths
-                coin *= 100;
+
+    public static boolean checkCoinQuantityInMachine(HashMap<Integer, Integer> machineCoinQuantity) {
+        for (int quantity : machineCoinQuantity.values()){
+            if (quantity <= 2){
+                return false;
             }
-
-            amount+= coin;
-            providedCoins.add(coin);
-
-//            if (coinAmountFlag = false){
-//                System.out.println("Machine can't give you change." +
-//                        " Please insert equal amount of money for chosen product");
-//                paymentSystem(amount, products, machineCoinQuantity, providedCoins, acceptedCoins, scanner, product);
-//            }
-
-            machineCoinQuantity.put(coin, machineCoinQuantity.get(coin) + 1); // increments coin quantity by 1
         }
-
+        return true;
     }
 
     public static void fillTheArray(List<Integer> acceptedCoins) {
@@ -113,12 +125,12 @@ public class App {
 
     public static void fillTheHashMaps(HashMap<Integer, Integer> machineCoinQuantity, HashMap<Integer, Integer> products) {
         machineCoinQuantity.put(0,123);
-        machineCoinQuantity.put(10, 5); // coin value, quantity
-        machineCoinQuantity.put(20, 4);
-        machineCoinQuantity.put(50, 4);
-        machineCoinQuantity.put(100, 3);
-        machineCoinQuantity.put(200, 3);
-        machineCoinQuantity.put(500, 3);
+        machineCoinQuantity.put(10, 4); // coin value, quantity
+        machineCoinQuantity.put(20, 5);
+        machineCoinQuantity.put(50, 5);
+        machineCoinQuantity.put(100, 5);
+        machineCoinQuantity.put(200, 5);
+        machineCoinQuantity.put(500, 5);
 
         products.put(1, 80);
         products.put(2, 150);
