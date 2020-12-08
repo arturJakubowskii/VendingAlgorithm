@@ -95,7 +95,6 @@ public class App {
 //            }
 
             machineCoinQuantity.put(coin, machineCoinQuantity.get(coin) + 1); // increments coin quantity by 1
-            change =
         }
 
     }
