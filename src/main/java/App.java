@@ -68,6 +68,9 @@ public class App {
         for (int coin : providedCoins){
             userAmount+= coin;
         }
+        // we need to clear the list, if we don't do that
+        // userAmount will be growing with previous arguments
+        providedCoins.clear();
         return Math.abs(productValue - userAmount);
     }
 
