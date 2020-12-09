@@ -36,7 +36,9 @@ public class App {
 
 
 
-    public static void changeSystem(int userAmount, HashMap<Integer, Integer> products, HashMap<Integer, Integer> machineCoinQuantity, List<Integer> providedCoins, List<Integer> acceptedCoins, int product) {
+    public static void changeSystem(int userAmount, HashMap<Integer, Integer> products,
+                                    HashMap<Integer, Integer> machineCoinQuantity,
+                                    List<Integer> providedCoins, List<Integer> acceptedCoins, int product) {
 
         int change = setChange(userAmount, products, providedCoins, product);
 
@@ -68,7 +70,8 @@ public class App {
         }
     }
 
-    public static int setChange(int userAmount, HashMap<Integer, Integer> products, List<Integer> providedCoins, int product) {
+    public static int setChange(int userAmount, HashMap<Integer, Integer> products,
+                                List<Integer> providedCoins, int product) {
         int productValue = products.get(product);
         for (int coin : providedCoins){
             userAmount+= coin;
@@ -83,7 +86,10 @@ public class App {
 
 
 
-    public static void paymentSystem(int amount, HashMap<Integer, Integer> products, HashMap<Integer, Integer> machineCoinQuantity, List<Integer> providedCoins, List<Integer> acceptedCoins, Scanner scanner, int product) {
+    public static void paymentSystem(int amount, HashMap<Integer, Integer> products,
+                                     HashMap<Integer, Integer> machineCoinQuantity,
+                                     List<Integer> providedCoins, List<Integer> acceptedCoins,
+                                     Scanner scanner, int product) {
 
             while (amount < products.get(product)){
                 int coin = scanner.nextInt();
@@ -100,7 +106,8 @@ public class App {
                 amount+= coin;
 
                 if (amount > products.get(product) && !checkCoinQuantityInMachine(machineCoinQuantity)){
-                    paymentSystem(amount, products, machineCoinQuantity, providedCoins, acceptedCoins, scanner, product);
+                    paymentSystem(amount, products, machineCoinQuantity, providedCoins,
+                            acceptedCoins, scanner, product);
 
                 }
 
@@ -128,7 +135,8 @@ public class App {
         acceptedCoins.add(50);
     }
 
-    public static void fillTheHashMaps(HashMap<Integer, Integer> machineCoinQuantity, HashMap<Integer, Integer> products) {
+    public static void fillTheHashMaps(HashMap<Integer, Integer> machineCoinQuantity,
+                                       HashMap<Integer, Integer> products) {
         machineCoinQuantity.put(0,123); // it's not a bug, it's a feature. This allows algorithm to work with 0, more on line 91
         machineCoinQuantity.put(10, 4); // coin value, quantity
         machineCoinQuantity.put(20, 5);
