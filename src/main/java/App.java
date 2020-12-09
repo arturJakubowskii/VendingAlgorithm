@@ -30,7 +30,7 @@ public class App {
             changeSystem(userAmount, products, machineCoinQuantity, providedCoins, acceptedCoins, product);
             i++;
         }
-        while (i < 10);
+        while (i < 10); //just 10 because it's optimal for testing if everything works correctly
 
     }
 
@@ -129,7 +129,7 @@ public class App {
     }
 
     public static void fillTheHashMaps(HashMap<Integer, Integer> machineCoinQuantity, HashMap<Integer, Integer> products) {
-        machineCoinQuantity.put(0,123);
+        machineCoinQuantity.put(0,123); // it's not a bug, it's a feature. This allows algorithm to work with 0, more on line 91
         machineCoinQuantity.put(10, 4); // coin value, quantity
         machineCoinQuantity.put(20, 5);
         machineCoinQuantity.put(50, 5);
